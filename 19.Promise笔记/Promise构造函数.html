@@ -1,0 +1,413 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="text/css" http-equiv="Content-Style-Type">
+<title>Promise构造函数</title>
+</head>
+<body>
+<h1 align="center" class="root">
+<a name="5o5b50dtmqs79j8srenbjv0hpk">Promise构造函数</a>
+</h1>
+<h2 class="topic">
+<a name="4hat12ds9bjodje7fe002tip7e">1.js中常见的异步代码是什么？</a>
+</h2>
+<h3 class="topic">
+<a name="2ut3596qqvepl34sq5dsehbanp">&nbsp;常见的代码都是从上到下，依次执行；&#13;
+而有的代码是异步的，遇到异步代码并不会等待，而是继续执行，&#13;
+异步代码例如：&#13;
+浏览器中的定时器和ajax请求；&#13;
+node.js中的文件操作、网络操作等都是异步的。</a>
+</h3>
+<h3 class="topic">
+<a name="01fsmb0mnk91pqb2bikhn7vt7e">&nbsp;在js中，记住一件事儿，所有的异步回调函数执行一定在普通代码执行之后&#13;
+也就是说所有的异步逻辑都在普通代码执行完毕之后再执行</a>
+</h3>
+<h3 class="topic">
+<a name="04dm0fpb22amr41bbc5gk6hfvv">&nbsp;免费的测试请求接口的网站&#13;
+http://jsonplaceholder.typicode.com/</a>
+</h3>
+<h2 class="topic">
+<a name="11e31vt98ebhtam6hafc7k68c9">2.异步并行&amp;异步串行</a>
+</h2>
+<h3 class="topic">
+<a name="5rje457v5ss9dtcmlv5hdt7vdt">&nbsp;异步并行</a>
+</h3>
+<h3 class="topic">
+<a name="68fq7bep75pd74bk4lt6bn9vit">&nbsp;&nbsp;（顾名思义就是多个请求之间都是相互不等待的，你发你的，我发我的）&#13;
+多个异步请求之间是相互不阻塞的，多个请求之间不会相互等待的&#13;
+其响应回来的速度取决于带宽，网速，等等原因。</a>
+</h3>
+<h3 class="topic">
+<a name="5ff3er2tt0b3uh71vpgnevuv5v">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img height="321" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/3lgttn4dnprjv35imrfjfih9bh.png" width="508"></p>
+<h3 class="topic">
+<a name="1ionqkeobhp0167ods8kdo5sbb">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img height="303" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/5ar172lqftjjgasnp7mvit69qr.png" width="730"></p>
+<h3 class="topic">
+<a name="4nm6kghgopnk2ehmvf66v3do83">&nbsp;异步串行</a>
+</h3>
+<h3 class="topic">
+<a name="5rr0m1ck9e1h309vap3u1dagr8">&nbsp;&nbsp;（同样，可以这么理解，就是多个请求之间，必须是等待这这个上一个请求发送完成之后，后面的再一次发送请求，每个请求之间都是相互等待的）&#13;
+如果使用异步串行来做比较复杂的逻辑的时候，这个时候就会出现回调地狱（回调套回调）回调地狱的出现，不影响功能，但是不利于后期的维护和阅读，我们要避免回调地狱的出现这个时候我就要用到promise和async，我们要知道promis和async函数都是用来优化或解决回调地狱的问题的。</a>
+</h3>
+<h3 class="topic">
+<a name="4g6q9joudi1tk0coq2c03fvhad">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/39rr4kktkde34vopdpt6asssc3.png"></p>
+<h3 class="topic">
+<a name="3vu9p23hvtcg0ikdidvcgckatg">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/2l4aomu9di7vt1claqfngk08mu.png"></p>
+<h2 class="topic">
+<a name="3mltaedcufdqm9hbi537iigq6t">5.一个小练习</a>
+</h2>
+<h3 class="topic">
+<a name="622mpgn6dfcgie8t9ro7eb5apk">&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img height="167" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/6ehcd1pjof2ojllhknef4cmjes.png" width="734"></p>
+<h3 class="topic">
+<a name="7buh5to8aq6b3kf91r7nnv7enp">&nbsp;只调用一次</a>
+</h3>
+<p class="topicImage">
+<img src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/2cl0d7dl3trglvbfpt5t80trov.png"></p>
+<h3 class="topic">
+<a name="4scg0u1qg3al1dkase5kscmert">&nbsp;循环执行</a>
+</h3>
+<h3 class="topic">
+<a name="4r64luf0u5c5387qf6to4rcq5l">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/4bltngoqrjmg86pu20imhmgq5s.png"></p>
+<h3 class="topic">
+<a name="44hsvnq1t08ukoc505gk6669tr">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/4bs5qbqj52d4d947kk1a31t944.png"></p>
+<h3 class="topic">
+<a name="005kmron72rct6kgvngp5spgpi">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/6bbvkh1uutjs24ohn07n6fgumf.png"></p>
+<h2 class="topic">
+<a name="6ugm5snm1s8cn9v86ail2h39vd">4.promise</a>
+</h2>
+<h3 class="topic">
+<a name="2v1i4b1f8eh05gpbuci6mk2qba">&nbsp;1.Promise对象介绍</a>
+</h3>
+<h3 class="topic">
+<a name="5psdtrkannjpb6hn9lgcm1js8o">&nbsp;&nbsp;promise是ES6新增的一个对象（或者说是构造函数），它可以帮我们的异步代码写的更优雅，更容易阅读。&#13;
+之所以axios最后可以使用.then()方法，就是因为axios把Promise对象给封装了。</a>
+</h3>
+<h3 class="topic">
+<a name="42chdcl69d54ia9o5qj9e9k0l7">&nbsp;&nbsp;promise对象代表一个异步操作&#13;
+promise对象有三种状态：&#13;
+1.pending   进行中&#13;
+2.resolve     已成功&#13;
+3.resject      已失败</a>
+</h3>
+<h3 class="topic">
+<a name="73l475bn20feqs7pu0fq4gqsn7">&nbsp;&nbsp;只有异步操作的结果才可以决定当前是哪一种状态，任何其他操作都无法改变这个状态，这也是promis这个名字的由来&ldquo;承诺&rdquo;</a>
+</h3>
+<h3 class="topic">
+<a name="39k7h4ioac4udd2oe1q6a82q63">&nbsp;&nbsp;promise对象的状态改变，只有两种可能，&#13;
+从pending变为resolve，从pending变为reject</a>
+</h3>
+<h3 class="topic">
+<a name="0ooije5dltjrrh7bqfisdfft6e">&nbsp;&nbsp;promise也有一些缺点：&#13;
+1.无法取消promise，一旦新建它，就会立即执行，无法中途取消；&#13;
+2.如果不设置回调函数，promise内部抛出的错误，在外部不会捕获到；&#13;
+3.当处于pending状态时，无法得知目前进展到哪一个阶段（刚刚开始阶段还是即将完成阶段，因为是异步状态，所以这个状态就不是很好把握）</a>
+</h3>
+<h3 class="topic">
+<a name="65phpkujretignuc9ckvb9johb">&nbsp;&nbsp;promise解决了异步代码流程控制的问题，也就是我们说的解决回调地狱的问题</a>
+</h3>
+<h3 class="topic">
+<a name="3dcs48jcsm5o0969gghdcpgs1i">&nbsp;&nbsp;.then()函数的作用：就是  预先  为异步操作，指定成功和失败的回调函数</a>
+</h3>
+<h3 class="topic">
+<a name="55vug671ola1cmss4j4h1qorji">&nbsp;2.promise对象的起步使用</a>
+</h3>
+<h3 class="topic">
+<a name="10qsf91p2mi02ougtfiu2gjvr3">&nbsp;&nbsp;// 1.创建一个promise对象   resolve---&gt;翻译：通过   reject---&gt;翻译：驳回&#13;
+    var p1 = new Promise(function(resolve,resject){&#13;
+    // 2.接收一个回调函数，这个回调函数需要接收两个参数，第一个参数是resolve，第二个参数是resject，成功执行resolve，失败执行resject  这是两个函数，是由js引擎提供的，不用自己导入第三方包&#13;
+       resolve()---&gt;成功  在异步操作成功时调用，并将异步操作的结果，作为参数传递出去&#13;
+       resject()---&gt;失败   在异步操作失败时调用，并将异步操作报出的错误，作为参数传递出去&#13;
+       //注意：resolve()和resject()函数只能执行一个，这两个函数不能同时执行，语法上就说不过去，一个函数既成功又失败，说不过去，要么成功，要么失败&#13;
+  })&#13;
+   注意：then()方法是Promise特有的，是原生ES6语法中新增的一个方法，then方法的第一个参数是resolve函数，第二个参数就是resject函数</a>
+</h3>
+<h3 class="topic">
+<a name="2l3pougomepr55dauc7ll96gb7">&nbsp;&nbsp;var p1 = new Promise(function(resolve,resject){})&#13;
+这个promis构造函数需要接收一个参数：这个参数就是一个回调函数&#13;
+注意：这个回调函数中需要传入两个参数：&#13;
+参数一：resolve   成功resolve&#13;
+参数二：resject    失败resject&#13;
+ //promise实例创建成功之后，可以用then方法分别指定resolve状态和resject状态的回调函数&#13;
+   p1.then(()=&gt;{&#13;
+       console.log('p1执行成功了')//参数1是被resolve()函数调用的&#13;
+   },()=&gt;{&#13;
+       console.log('p1执行失败了')//参数2是被resject()函数调用的&#13;
+   })&#13;
+或&#13;
+p1.then(  &#13;
+    function(value){  //---&gt;同样参数一是resolve()函数&#13;
+   //success&#13;
+   },&#13;
+    function(error){   //---&gt;参数2是resject()函数&#13;
+   //failure&#13;
+ });</a>
+</h3>
+<h3 class="topic">
+<a name="70fp42kko43hs28ea2fcbclor9">&nbsp;3.例如：promise对象的简单使用</a>
+</h3>
+<h3 class="topic">
+<a name="0i8g6oqk7mq7p1r5n5l0ojurfa">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/4dcukskv1fo3nb1pc5qkssgrid.png"></p>
+<h3 class="topic">
+<a name="2tagcbpuld8aa9u5c0qrl92aj0">&nbsp;&nbsp;promise的异步串行结构</a>
+</h3>
+<p class="topicImage">
+<img height="186" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/4hh0ecnu5669jalqodlfhqqv31.png" width="465"></p>
+<h3 class="topic">
+<a name="0c7iqnfro6a5m8rekbe645c33q">&nbsp;4.在promise中封装一个原生的ajax异步请求</a>
+</h3>
+<h3 class="topic">
+<a name="4s413hca1ik8oirshf2kl0rst6">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img height="381" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/2bhs4dv0e9kojgrvtet9ivcd1t.png" width="585"></p>
+<h3 class="topic">
+<a name="7lmppeus3nqktgcbfp7b4hge5c">&nbsp;5.使用Promise发送多个请求的代码格式</a>
+</h3>
+<h3 class="topic">
+<a name="0qk1v30i09eo83f0f7ieu627l8">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img height="248" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/7l3677jeqo7o2jjfs75af99g1k.png" width="562"></p>
+<h3 class="topic">
+<a name="6dsh6lr7u92m1pe387l4n8ghil">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img height="232" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/4alnfg9tavdh4nrr9t3om5cept.png" width="572"></p>
+<h3 class="topic">
+<a name="30k2m2aihcln3bqkiod5rjboro">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img height="318" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/4f7ukgtip1irau28g3padssbrr.png" width="578"></p>
+<h3 class="topic">
+<a name="4alpnlm9lirq3asuen2kv63gjs">&nbsp;6.promise在工作中的使用</a>
+</h3>
+<h3 class="topic">
+<a name="5l151ql3hrm29bm81p04blav4s">&nbsp;&nbsp;先封装一个promise版本的定时器，这个定时器必须是promise版本的，后面调用Pro这个方法的时候，才能使用 .then() 方法</a>
+</h3>
+<p class="topicImage">
+<img src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/6e5u4h0fmj74mn2jnfb7ao9u9k.png"></p>
+<h3 class="topic">
+<a name="0ct45vpvaa095p7e5m96l4n2d3">&nbsp;&nbsp;再封装一个promise版本的原生ajax请求</a>
+</h3>
+<p class="topicImage">
+<img src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/79q9vcb43q2fisggk146v5636p.png"></p>
+<h3 class="topic">
+<a name="1ocvkbqeprfrktdbagldaeeqa9">&nbsp;&nbsp;最后再外部进行响应数据的接收，如果连续使用.then() 方法，每个.then()方法里面return 一个Promise对象，否则是不能连续使用.then()方法的。</a>
+</h3>
+<p class="topicImage">
+<img height="259" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/3ohteach5j0mq0q19smoj8j7d1.png" width="513"></p>
+<h3 class="topic">
+<a name="03ers03k9fo7lplmhjhon4cgej">&nbsp;&nbsp;promise只有在发送多个异步请求的时候，进行流程控制的时候，promise才能发挥最大的作用</a>
+</h3>
+<h3 class="topic">
+<a name="25ph3sboj351ril02h9l0m84p3">&nbsp;7.promise的异常处理</a>
+</h3>
+<h3 class="topic">
+<a name="0c81o0vghj9mmf317luj05hqp1">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img height="240" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/75pns6os43ep2nhrjtkqvm6duq.png" width="542"></p>
+<h3 class="topic">
+<a name="1vtv3sph2sm7bauls8ppgmvt4c">&nbsp;&nbsp;我们如果处理请求失败的逻辑时，我们更推荐使用 .catch() 函数，.catch()函数是promise这个类提供的方法，catch()函数和then()函数同级。</a>
+</h3>
+<h3 class="topic">
+<a name="6lvlpfju5hnifr4np76tka3grs">&nbsp;8.finally函数</a>
+</h3>
+<h3 class="topic">
+<a name="24sdnmvbonc2bo6tcvnbdcsg49">&nbsp;&nbsp;finally函数不管请求成功或者失败，都会执行的函数，&#13;
+.then() .catch() .finally()都是同级的函数&#13;
+成功执行.then()&#13;
+失败执行.catch()&#13;
+不管成功或者失败都会执行的finally()&#13;
+finally函数也是promise构造函数中的方法</a>
+</h3>
+<h3 class="topic">
+<a name="6tlnsvue4rsknvgajos3ggbmlg">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img height="241" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/5s3rkpa4ppcg4vcgircvpl2uqr.png" width="507"></p>
+<h3 class="topic">
+<a name="0pgkvlpctnbgitvrgpq0p1ts3v">&nbsp;9.Async函数</a>
+</h3>
+<h3 class="topic">
+<a name="6tf8pp71fa08vkhru30oadk3d8">&nbsp;&nbsp;Async函数底层其实还是对promise构造函数的进行的封装</a>
+</h3>
+<h3 class="topic">
+<a name="3oapqaac51l4sev2q3fl3c9kci">&nbsp;&nbsp;任何都可以使用async函数</a>
+</h3>
+<h3 class="topic">
+<a name="7hcl9ba7m7cskup5lcrb6vvlf1">&nbsp;&nbsp;&nbsp;具名函数标记为async函数：&#13;
+async function fun () {}&#13;
+匿名函数：&#13;
+async function（）{}&#13;
+箭头函数：&#13;
+async（）=&gt; {}</a>
+</h3>
+<h3 class="topic">
+<a name="1u8v3lqerne592brsrl9n5e83f">&nbsp;&nbsp;&nbsp;任何函数都可以被标记为async函数&#13;
+对象函数成员简写：&#13;
+const user = {&#13;
+   sayHello：async function（）{}，&#13;
+   async sayHello （）{}，&#13;
+   sayHello：async（）=&gt; {}&#13;
+}</a>
+</h3>
+<h3 class="topic">
+<a name="6lu4tdfv0713t0edn8pd8573ub">&nbsp;&nbsp;await 必须要和async一块儿使用，这两个东西都暂时不能单独使用，在ES7中await应该可以会从async中脱离出来，但是ES6中await必须要和async结合使用&#13;
+我们使用async函数其实根本目的就是简化了获取Promise的结果。&#13;
+await一定是给所属函数标记为Async函数</a>
+</h3>
+<h3 class="topic">
+<a name="428mbvh8qji3r75b5r8jfo8k0j">&nbsp;&nbsp;async函数的返回值是一个Promise对象，await接收的一定是一个promise对象才有意思</a>
+</h3>
+<h3 class="topic">
+<a name="3r682q9g60horv8qhqavp2o5fn">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img height="293" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/5hpr5m1ume7gs3iqancgnq0q1c.png" width="511"></p>
+<h3 class="topic">
+<a name="38tht143pcchkc425e7mn0rnlf">&nbsp;&nbsp;Async函数与ajax请求结合使用</a>
+</h3>
+<h3 class="topic">
+<a name="090o89s64lcvkda5itqbe8m0c7">&nbsp;&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/1nideqi4884air8u9rm6gouki8.png"></p>
+<h3 class="topic">
+<a name="0v3fl99689p7hh3vcd5f2j2j2b">&nbsp;&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/0kj3ugrt82gues1sf8567udoaj.png"></p>
+<h3 class="topic">
+<a name="2q03kq4mns9rhat52v52n8m78a">&nbsp;&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img height="276" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/2113ujeqpnned12seel9ev1tfh.png" width="568"></p>
+<h3 class="topic">
+<a name="3le5h0a03erjmu0c9djn0jmgsv">&nbsp;&nbsp;async函数的异常处理</a>
+</h3>
+<h3 class="topic">
+<a name="4kfdbmca5puv8od5l706ataa7g">&nbsp;&nbsp;&nbsp;直接在Promise函数后面写  .catch() 函数即可</a>
+</h3>
+<p class="topicImage">
+<img height="169" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/0199tossb4hmpd2vg4fo4bb8jj.png" width="508"></p>
+<h3 class="topic">
+<a name="7na84pmphhsfl30gmterijinhk">&nbsp;&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img height="315" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/705dq2im6fu0n1rhkmi3qf7p5n.png" width="747"></p>
+<h3 class="topic">
+<a name="24rnu9m37d7nvpbcthhev2js2l">&nbsp;10.axios+async函数</a>
+</h3>
+<h3 class="topic">
+<a name="16iklb5jkajksdsbvg9c0svgkr">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/1pneuo0npu905l2q0kt59gn7oa.png"></p>
+<h3 class="topic">
+<a name="3qa4m7mj2usr06osksuuiluuui">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/65b9rj7ku1le27scntupffm9jh.png"></p>
+<h3 class="topic">
+<a name="55k8nfn1t0t0dqp9k15ga4e6q1">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/32panvlbf7hmbi6s3tu5918985.png"></p>
+<h3 class="topic">
+<a name="778rof6ocb6nqtg1pheugfp8ch">&nbsp;11.vue中Async函数和axios结合使用</a>
+</h3>
+<h3 class="topic">
+<a name="6celq199bstbj5a38pfrcsdc66">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/7m8mvr1mtgegkncsbkvctojrn4.png"></p>
+<h3 class="topic">
+<a name="6eh56o62ot5ug7pvoskpnqddfr">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img height="312" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/2akcfhf62mrisbm4fmqn8ref0p.png" width="693"></p>
+<h3 class="topic">
+<a name="67cfo970aohjdor9tcd99hs2fj">&nbsp;&nbsp;</a>
+</h3>
+<p class="topicImage">
+<img height="189" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/0rilcqvouooag8gpkej2g3qvrs.png" width="703"></p>
+<h2 class="topic">
+<a name="2v7jc80cmvkis5p2sgc1rqlhj7">3.axios的使用</a>
+</h2>
+<h3 class="topic">
+<a name="0u43hko0qam3bu5ui7q451uk91">&nbsp;通过axios使用promise&#13;
+首先先在当前目录安装axios &#13;
+1.npm i axios&#13;
+&lt;!-- 引入axios --&gt;&#13;
+2.&lt;script src="./node_modules/axios/dist/axios.js"&gt;&lt;/script&gt;&#13;
+3.使用axios&#13;
+axios({&#13;
+        // 请求方式&#13;
+        method:'GET',&#13;
+        // 请求地址&#13;
+        url:'http://jsonplaceholder.typicode.com/posts'&#13;
+}).then(res=&gt;{&#13;
+        console.log('响应成功了');&#13;
+        console.log(res);&#13;
+   })</a>
+</h3>
+<h3 class="topic">
+<a name="3c7m73pnnm2884v86ofqpaqg26">&nbsp;axios嵌套</a>
+</h3>
+<h3 class="topic">
+<a name="0o6n5f4h40ipdbrtr3vkcja81k">&nbsp;&nbsp;axios({&#13;
+        // 请求方式&#13;
+        method:'GET',&#13;
+        // 请求地址&#13;
+        url:'http://jsonplaceholder.typicode.com/posts'&#13;
+    }).then(res=&gt;{&#13;
+        console.log('posts数据响应成功了');&#13;
+&#13;
+        // 再嵌套第二个请求&#13;
+        axios({&#13;
+            url:'http://jsonplaceholder.typicode.com/posts/1',&#13;
+            method:'GET'&#13;
+        }).then(res=&gt;{&#13;
+            console.log('post/1的数据响应成功了');&#13;
+        })&#13;
+    })&#13;
+这种嵌套多了之后也会出现回调地狱的情况</a>
+</h3>
+<h3 class="topic">
+<a name="5ldpfpocaqq34ape272dfa4bam">&nbsp;&nbsp;axios请求嵌套的多了之后，也会出现类似于ajax的回调地狱的现象</a>
+</h3>
+<h3 class="topic">
+<a name="5fmva3l8c5lud3lnbb5cublut6">&nbsp;&nbsp;这是使用axios时发送请求的正确写法</a>
+</h3>
+<p class="topicImage">
+<img height="355" src="Promise%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0_files/4u7ssdcljo6dsp0q0d99lt0154.png" width="579"></p>
+</body>
+</html>
